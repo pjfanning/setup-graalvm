@@ -19,7 +19,7 @@ async function run(): Promise<void> {
       componentsString.length > 0 ? componentsString.split(',') : []
     const setJavaHome = core.getInput('set-java-home') === 'true'
     const enableNativeImageMusl = core.getInput('native-image-musl') === 'true'
-    const cache = core.getInput(constants.INPUT_CACHE);
+    const cache = core.getInput(c.INPUT_CACHE);
 
     if (c.IS_WINDOWS) {
       setUpWindowsEnvironment()
