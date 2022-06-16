@@ -7,6 +7,7 @@ import {setUpGUComponents} from './gu'
 import {setUpMandrel} from './mandrel'
 import {setUpNativeImageMusl} from './features'
 import {setUpWindowsEnvironment} from './msvc'
+import { restore } from './cache';
 
 async function run(): Promise<void> {
   try {
@@ -18,6 +19,7 @@ async function run(): Promise<void> {
       componentsString.length > 0 ? componentsString.split(',') : []
     const setJavaHome = core.getInput('set-java-home') === 'true'
     const enableNativeImageMusl = core.getInput('native-image-musl') === 'true'
+    const cache = core.getInput(constants.INPUT_CACHE);
 
     if (c.IS_WINDOWS) {
       setUpWindowsEnvironment()
@@ -66,6 +68,9 @@ async function run(): Promise<void> {
       } else {
         await setUpGUComponents(gdsToken, graalVMHome, components)
       }
+    }
+    if (cache) {
+      await restore(cache)
     }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
