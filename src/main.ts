@@ -2,12 +2,12 @@ import * as c from './constants'
 import * as core from '@actions/core'
 import * as graalvm from './graalvm'
 import {join} from 'path'
+import { restore } from './cache';
 import {setUpDependencies} from './dependencies'
 import {setUpGUComponents} from './gu'
 import {setUpMandrel} from './mandrel'
 import {setUpNativeImageMusl} from './features'
 import {setUpWindowsEnvironment} from './msvc'
-import { restore } from './cache';
 
 async function run(): Promise<void> {
   try {
