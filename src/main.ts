@@ -2,6 +2,7 @@ import * as c from './constants'
 import * as core from '@actions/core'
 import * as graalvm from './graalvm'
 import {join} from 'path'
+import { restore } from './cache';
 import {setUpDependencies} from './dependencies'
 import {setUpGUComponents} from './gu'
 import {setUpMandrel} from './mandrel'
@@ -18,6 +19,7 @@ async function run(): Promise<void> {
       componentsString.length > 0 ? componentsString.split(',') : []
     const setJavaHome = core.getInput('set-java-home') === 'true'
     const enableNativeImageMusl = core.getInput('native-image-musl') === 'true'
+    const cache = core.getInput(c.INPUT_CACHE);
 
     if (c.IS_WINDOWS) {
       setUpWindowsEnvironment()
@@ -66,6 +68,9 @@ async function run(): Promise<void> {
       } else {
         await setUpGUComponents(gdsToken, graalVMHome, components)
       }
+    }
+    if (cache) {
+      await restore(cache)
     }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)

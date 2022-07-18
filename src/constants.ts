@@ -18,6 +18,8 @@ export const MANDREL_NAMESPACE = 'mandrel-'
 export const GDS_BASE = 'https://gds.oracle.com/api/20220101'
 export const GDS_GRAALVM_PRODUCT_ID = 'D53FAE8052773FFAE0530F15000AA6C6'
 
+export const INPUT_CACHE = 'cache';
+
 export type LatestReleaseResponse =
   otypes.Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
 
